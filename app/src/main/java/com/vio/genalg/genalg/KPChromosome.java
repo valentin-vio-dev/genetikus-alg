@@ -45,7 +45,7 @@ public class KPChromosome extends Chromosome {
 
     @Override
     public void mutate() {
-        if (random.nextInt(100) > 50) {
+        /*if (random.nextInt(100) > 50) {
             Collections.shuffle(genes);
         }
 
@@ -55,6 +55,12 @@ public class KPChromosome extends Chromosome {
                     genes.set(i, random.nextInt(100) > 50 ? 1 : 0);
                 }
             }
+        }*/
+
+        for (int i = 0; i < genes.size(); i++) {
+            //if (random.nextInt(100) > 50) {
+                genes.set(i, random.nextInt(100) > 50 ? 1 : 0);
+            //}
         }
 
         calculateFitness();

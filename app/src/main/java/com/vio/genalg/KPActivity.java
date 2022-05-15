@@ -61,16 +61,23 @@ public class KPActivity extends AppCompatActivity {
             //System.out.println(population.get(i));
         }
 
-        System.out.println("...............");
+        /*System.out.println("...............");
         System.out.println(settings.getNumOfIters());
-        System.out.println("...............");
+        System.out.println("...............");*/
 
         long startTime = System.currentTimeMillis();
-        best = population.get(0);
+        //best = population.get(0);
+        best = null;
 
         thread = new Thread(() -> {
             for (int i = 0; i < settings.getNumOfIters(); i++) {
                 currentIter = i;
+
+                /*try {
+                    Thread.sleep(250);
+                } catch(InterruptedException e) {
+                    // Process exception
+                }*/
 
                 for (int j = 0; j < settings.getPopulationSize(); j++) {
                     System.out.println(population.get(j));
@@ -79,26 +86,39 @@ public class KPActivity extends AppCompatActivity {
                 //System.out.println(".................");
                 //System.out.println(Chromosome.getBestN(1).get(0));
 
-                KPChromosome currentbest = (KPChromosome) Chromosome.getBestN(1, false).get(0);
-                if (currentbest.getFitness() > best.getFitness()) {
-                    best = currentbest;
+                if (best != null) {
+                    KPChromosome currentbest = (KPChromosome) Chromosome.getBestN(1, false).get(0);
+                    if (currentbest.getFitness() > best.getFitness() && KPChromosome.getStats(currentbest)[1] <= settings.getMaxWeight()) {
+                        best = currentbest;
+                    }
+                } else {
+                    KPChromosome currentbest = (KPChromosome) Chromosome.getBestN(1, false).get(0);
+                    System.out.println(currentbest);
+                    System.out.println(settings.getMaxWeight());
+                    if (KPChromosome.getStats(currentbest)[1] <= settings.getMaxWeight()) {
+                        best = currentbest;
+                    }
                 }
 
                 for (int j = 0; j < settings.getPopulationSize(); j++) {
-                    if (population.get(j).getId() == best.getId()) {
+                    if (best != null && population.get(j).getId() == best.getId()) {
                         continue;
                     }
-                    population.get(j).crossover();
+                    //population.get(j).crossover();
                     population.get(j).mutate();
                 }
 
-                System.out.println("-----------------------------------");
+                //System.out.println("-----------------------------------");
 
                 long ellapsed = System.currentTimeMillis() - startTime;
                 SimpleDateFormat sdf = new SimpleDateFormat("mm:ss");
                 Date resultdate = new Date(ellapsed);
                 runOnUiThread(() -> {
-                    setInfo("Max weight: " + settings.getMaxWeight(), "Population size: " + settings.getPopulationSize(), "Iterations: " + currentIter + " / " + settings.getNumOfIters(), "Best:\n\t\t" + KPChromosome.getStats(best)[0] + " price\n\t\t" + KPChromosome.getStats(best)[1] + " weight", "Ellapsed time: " + (sdf.format(resultdate)));
+                    if (best == null) {
+                        setInfo("Max weight: " + settings.getMaxWeight(), "Population size: " + settings.getPopulationSize(), "Iterations: " + currentIter + " / " + settings.getNumOfIters(), "Best:\n\t\tunknown", "Ellapsed time: " + (sdf.format(resultdate)));
+                    } else {
+                        setInfo("Max weight: " + settings.getMaxWeight(), "Population size: " + settings.getPopulationSize(), "Iterations: " + currentIter + " / " + settings.getNumOfIters(), "Best:\n\t\t" + KPChromosome.getStats(best)[0] + " price\n\t\t" + KPChromosome.getStats(best)[1] + " weight", "Ellapsed time: " + (sdf.format(resultdate)));
+                    }
                     setItemsText();
                 });
             }
@@ -132,8 +152,17 @@ public class KPActivity extends AppCompatActivity {
     public void setItemsText() {
         String text = "";
         for (int i = 0; i < items.size(); i++) {
-            text += "Price: " + items.get(i).getPrice() + "\t\t\tWeight: " + items.get(i).getWeight() + "\t\t\t\t\t" + (best.getGenes().get(i) == 1 ? "OK" : "-") + "\n";
+            text += line("Price: " + items.get(i).getPrice(), 15) + line("Weight: " + items.get(i).getWeight(), 15) + line(best == null ? "unkown" : (best.getGenes().get(i) == 1 ? "\uD83D\uDC5C" : " "), 5) + "\n";
         }
         textItemsKP.setText(text);
+    }
+
+    public String line(String text, int length) {
+        int gap = length - text.length();
+        String res = text;
+        for (int i = 0; i < gap; i++) {
+            res += " ";
+        }
+        return res;
     }
 }

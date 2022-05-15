@@ -49,42 +49,6 @@
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:layout_marginLeft="16dp"
-        android:onClick="onGMSettings"
-        android:layout_marginRight="16dp"
-        app:cardCornerRadius="0dp"
-        android:clickable="true"
-        android:foreground="?android:attr/selectableItemBackground"
-        app:contentPadding="16dp">
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical">
-
-            <TextView
-                android:id="@+id/textView4"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="16dp"
-                android:textStyle="bold"
-                android:text="Global Minimum/Maximum"
-                android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-                android:textColor="#999999"  />
-
-            <TextView
-                android:id="@+id/textView6"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Given a continuous function. What is the global minimum or maximum?"
-                android:textAppearance="@style/TextAppearance.AppCompat.Small" />
-        </LinearLayout>
-    </androidx.cardview.widget.CardView>
-
-    <androidx.cardview.widget.CardView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
         android:layout_marginLeft="16dp"
         android:layout_marginTop="16dp"
         android:layout_marginRight="16dp"

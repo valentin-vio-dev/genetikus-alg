@@ -11,19 +11,19 @@
     <TextView
         android:id="@+id/textInfoKP"
         android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        android:layout_weight="1"
-        android:textStyle="bold"
+        android:layout_height="wrap_content"
+        android:text="TextView"
         android:textColor="?colorPrimary"
-        android:text="TextView" />
+        android:textStyle="bold" />
 
     <TextView
         android:id="@+id/textItemsKP"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
+        android:layout_marginTop="16dp"
         android:layout_weight="1"
-        android:text="TextView"
-        android:textAppearance="@style/TextAppearance.AppCompat.Large"
+        android:fontFamily="monospace"
+        android:text="Items"
         android:textColor="?colorPrimary"
         android:textStyle="bold" />
 </LinearLayout>
